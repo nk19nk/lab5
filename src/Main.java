@@ -3,6 +3,22 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    //3.4
+    public static <T> List<T> addAfter(List<T> L, T E) {
+        if (L == null || L.isEmpty()) {
+            throw new IllegalArgumentException("Список не может быть пустым или null");
+        }
+
+        int index = L.indexOf(E);
+        if (index == -1) {
+            throw new IllegalArgumentException("Элемента нет в списке");
+        }
+
+        List<T> newL = new ArrayList<>(L);
+        newL.addAll(index + 1, L);
+        return newL;
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
@@ -99,34 +115,55 @@ public class Main {
 //                System.out.println("Вещественное число: " + f.doublevalue());
 //            }
 //        }
+//
+//        //2.1
+//        System.out.println("Задание 2.1");
+//        System.out.print("Введите имя кота: ");
+//        String name = in.nextLine();
+//        Cat cat = new Cat(name);
+//        List<Meowable> meowables = new ArrayList<>();
+//        meowables.add(cat);
+//        System.out.print("Сколько раз кот должен мяукнуть? ");
+//        int kolv;
+//        while (true) {
+//            if (in.hasNextInt()) {
+//                kolv = in.nextInt();
+//                if (kolv > 0){
+//                    break;
+//                } else {
+//                    System.out.print("Введите положительное число: ");
+//                }
+//            } else {
+//                System.out.print("Введите корректное число: ");
+//                in.next();
+//            }
+//        }
+//
+//        System.out.println("Кот начинает мяукать ...");
+//        for (int i = 0; i < kolv; i++) {
+//            Funs.meowables(meowables);
+//        }
+//        System.out.println(cat + " мяукал " + cat.getCount() + " раз(а)");
 
-        //2.1
-        System.out.println("Задание 2.1");
-        System.out.print("Введите имя кота: ");
-        String name = in.nextLine();
-        Cat cat = new Cat(name);
-        List<Meowable> meowables = new ArrayList<>();
-        meowables.add(cat);
-        System.out.print("Сколько раз кот должен мяукнуть? ");
-        int kolv;
-        while (true) {
-            if (in.hasNextInt()) {
-                kolv = in.nextInt();
-                if (kolv > 0){
-                    break;
-                } else {
-                    System.out.print("Введите положительное число: ");
-                }
-            } else {
-                System.out.print("Введите корректное число: ");
-                in.next();
+
+        //3.4
+        System.out.println("Задание 3.4");
+        try {
+            System.out.println("Введите элементы списка через пробел:");
+            String input = in.nextLine();
+            String[] elements = input.split(" ");
+            List<String> list = new ArrayList<>();
+            for (String el : elements) {
+                list.add(el);
             }
+            System.out.println("Введенный список:");
+            System.out.println(list);
+            System.out.println("Введите элемент, после которого надо вставить копию списка:");
+            String element = in.nextLine();
+            List<String> newList = addAfter(list, element);
+            System.out.println("Новый список: " + newList);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
         }
-
-        System.out.println("Кот начинает мяукать ...");
-        for (int i = 0; i < kolv; i++) {
-            Funs.meowables(meowables);
-        }
-        System.out.println(cat + " мяукал " + cat.getCount() + " раз(а)");
     }
 }
