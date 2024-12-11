@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     //3.4
@@ -144,26 +143,190 @@ public class Main {
 //            Funs.meowables(meowables);
 //        }
 //        System.out.println(cat + " мяукал " + cat.getCount() + " раз(а)");
+//
+//
+//        //3.4
+//        System.out.println("Задание 3.4");
+//        try {
+//            System.out.println("Введите элементы списка через пробел:");
+//            String input = in.nextLine();
+//            String[] elements = input.split(" ");
+//            List<String> list = new ArrayList<>();
+//            for (String el : elements) {
+//                list.add(el);
+//            }
+//            System.out.println("Введенный список:");
+//            System.out.println(list);
+//            System.out.println("Введите элемент, после которого надо вставить копию списка:");
+//            String element = in.nextLine();
+//            List<String> newList = addAfter(list, element);
+//            System.out.println("Новый список: " + newList);
+//        } catch (IllegalArgumentException e) {
+//            System.out.println("Ошибка: " + e.getMessage());
+//        }
+//
+//        //4.4
+//        System.out.println("Задание 4.4");
+//        String file = "src/file.txt";
+//        Map<String, List<Integer>> people = new HashMap<>();
+//
+//        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+//            String n1 = reader.readLine();
+//            if (n1 == null || n1.isEmpty()) {
+//                System.out.println("Файл пустой");
+//                return;
+//            }
+//            int n;
+//            try {
+//                n = Integer.parseInt(n1);
+//                if (n <= 0 || n > 500) {
+//                    System.out.println("Количество абитуриентов не может быть отрицательным или больше 500");
+//                    return;
+//                }
+//            } catch (NumberFormatException e) {
+//                System.out.println("Неверный формат количества абитуриентов");
+//                return;
+//            }
+//
+//            for (int i = 0; i < n; i++) {
+//                String line = reader.readLine();
+//                if (line == null || line.isEmpty()) {
+//                    System.out.println("В файле нет " + n + " абитуриентов");
+//                    return;
+//                }
+//                String[] mas = line.split(" ");
+//                if (mas.length != 4) {
+//                    System.out.println("Неверный формат строки: " + line);
+//                    return;
+//                }
+//
+//                String name = mas[0] + " " + mas[1];
+//                List<Integer> marks = Arrays.asList(Integer.parseInt(mas[2]), Integer.parseInt(mas[3]));
+//                people.put(name, marks);
+//            }
+//
+//
+//            System.out.println("Абитуриенты, не допущенные к экзаменам:");
+//            for (Map.Entry<String, List<Integer>> entry : people.entrySet()) {
+//                List<Integer> marks = entry.getValue();
+//                int mark1 = marks.get(0);
+//                int mark2 = marks.get(1);
+//                if (mark1 < 30 || mark2 < 30) {
+//                    System.out.println(entry.getKey());
+//                }
+//            }
+//
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Файл не найден: " + file);
+//        } catch (IOException e) {
+//            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+//        }
+//
+//
+//        //5.4
+//        System.out.println("Задание 5.4");
+//        String filePath = "src/file2.txt";
+//        // Глухие согласные буквы русского языка
+//        Set<Character> deafConsonants = new HashSet<>(Arrays.asList('к', 'п', 'с', 'т', 'ф', 'х', 'ц', 'ч', 'ш'));
+//
+//        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+//            String line;
+//            Set<Character> resultSet = new TreeSet<>(); // Для хранения результатов в алфавитном порядке
+//
+//            while ((line = reader.readLine()) != null) {
+//                String[] words = line.split("\\s+"); // Разделение на слова
+//                for (int i = 0; i < words.length; i++) {
+//                    if ((i + 1) % 2 == 1) { // Проверяем, что слово нечетное
+//                        Set<Character> currentWordSet = new HashSet<>();
+//                        for (char ch : words[i].toLowerCase().toCharArray()) {
+//                            if (deafConsonants.contains(ch)) {
+//                                currentWordSet.add(ch);
+//                            }
+//                        }
+//                        if (resultSet.isEmpty()) {
+//                            resultSet.addAll(currentWordSet);
+//                        } else {
+//                            resultSet.retainAll(currentWordSet); // Пересечение с предыдущими словами
+//                        }
+//                    }
+//                }
+//            }
+//
+//            // Вывод результата
+//            if (resultSet.isEmpty()) {
+//                System.out.println("Нет общих глухих согласных в нечетных словах.");
+//            } else {
+//                System.out.println("Глухие согласные, входящие в каждое нечетное слово (в алфавитном порядке):");
+//                for (char ch : resultSet) {
+//                    System.out.print(ch + " ");
+//                }
+//                System.out.println();
+//            }
+//
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Файл не найден: " + filePath);
+//        } catch (IOException e) {
+//            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+//        }
 
 
-        //3.4
-        System.out.println("Задание 3.4");
-        try {
-            System.out.println("Введите элементы списка через пробел:");
+        //6.4
+        Queue<Object> queue = new LinkedList<>();
+        // Ввод элементов очереди
+        while (queue.isEmpty()) {
+            System.out.println("Введите данные через пробел:");
             String input = in.nextLine();
-            String[] elements = input.split(" ");
-            List<String> list = new ArrayList<>();
-            for (String el : elements) {
-                list.add(el);
+            if (!input.trim().isEmpty()) {
+                String[] elements = input.split(" ");
+                queue.addAll(Arrays.asList(elements));
             }
-            System.out.println("Введенный список:");
-            System.out.println(list);
-            System.out.println("Введите элемент, после которого надо вставить копию списка:");
-            String element = in.nextLine();
-            List<String> newList = addAfter(list, element);
-            System.out.println("Новый список: " + newList);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        int i;
+        while (true) {
+            System.out.println("Введите индекс i (начало диапазона):");
+            if (in.hasNextInt()) {
+                i = in.nextInt();
+                if (i < 0 || i >= queue.size()) {
+                    System.out.println("Индекс должен быть в диапазоне от 0 до " + (queue.size() - 1));
+                } else {
+                    break;
+                }
+            } else {
+                System.out.println("Введите корректное целое число");
+                in.next();
+            }
+        }
+
+        int j;
+        while (true) {
+            System.out.println("Введите индекс j (конец диапазона):");
+            if (in.hasNextInt()) {
+                j = in.nextInt();
+                if (j <= i || j >= queue.size()) {
+                    System.out.println("Индекс должен быть больше i и меньше " + queue.size());
+                } else {
+                    break;
+                }
+            } else {
+                System.out.println("Введите корректное целое число");
+                in.next();
+            }
+        }
+
+        // Проверка равенства элементов в диапазоне [i, j]
+        LinkedList<Object> list = new LinkedList<>(queue);
+        boolean flag = true;
+        for (int k = i; k < j; k++) {
+            if (!list.get(k).equals(list.get(k + 1))) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            System.out.println("Элементы диапазона равны");
+        } else {
+            System.out.println("Элементы диапазона не равны");
         }
     }
 }
