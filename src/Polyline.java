@@ -4,8 +4,9 @@ import java.util.List;
 public class Polyline {
     private List<Point> points;
 
-    public Polyline() {
-        this.points = new ArrayList<>();
+
+    public Polyline(List<Point> points) {
+        this.points = points;
     }
 
     public void addPoint(Point point) {
@@ -17,15 +18,7 @@ public class Polyline {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Линия: ");
-        for (int i = 0; i < points.size(); i++) {
-            sb.append(points.get(i).getPointString());
-            if (i < points.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        return sb.toString();
+        return "Ломаная линия " + points;
     }
 }
 

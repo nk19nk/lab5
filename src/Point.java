@@ -30,22 +30,16 @@ public class Point {
         return y;
     }
 
-
-    public String getPointString(){
-        return "{" + x + "x" + ";" + y + "y}";
+    public String toString() {
+        return "{" + x + ";" + y + "}";
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Point point = (Point) obj;
-        return Double.compare(point.x, x) == 0 && Double.compare(point.y, y) == 0;
-    }
-
-    @Override
-    public String toString() {
-        return getPointString();
+        Point newobj = (Point) obj;
+        return this.x == newobj.x && this.y == newobj.y;
     }
 
     @Override
