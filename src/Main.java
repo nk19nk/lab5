@@ -30,7 +30,8 @@ public class Main {
             }
         }
         System.out.println("Введенная дробь:");
-        Cachfraction f = new Cachfraction(ch, zn);
+        Fraction drob = new Fraction(ch, zn);
+        Cachedfraction f = new Cachedfraction(drob);
         System.out.println(f);
 
         while (true) {
@@ -72,7 +73,7 @@ public class Main {
                     }
                 }
                 System.out.print("Новая дробь: ");
-                f.setChisl(newch);
+                f.updatechisl(newch);
                 System.out.println(f);
             }
 
@@ -89,7 +90,7 @@ public class Main {
                     }
                 }
                 System.out.print("Новая дробь: ");
-                f.setZnam(newzn);
+                f.updateznam(newzn);
                 System.out.println(f);
             }
 
