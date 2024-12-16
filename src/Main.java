@@ -223,110 +223,116 @@ public class Main {
 //        }
 //
 //
-//        //5.4
-//        System.out.println("Задание 5.4");
-//        String filePath = "src/file2.txt";
-//        // Глухие согласные буквы русского языка
-//        Set<Character> deafConsonants = new HashSet<>(Arrays.asList('к', 'п', 'с', 'т', 'ф', 'х', 'ц', 'ч', 'ш'));
-//
-//        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-//            String line;
-//            Set<Character> resultSet = new TreeSet<>(); // Для хранения результатов в алфавитном порядке
-//
-//            while ((line = reader.readLine()) != null) {
-//                String[] words = line.split("\\s+"); // Разделение на слова
-//                for (int i = 0; i < words.length; i++) {
-//                    if ((i + 1) % 2 == 1) { // Проверяем, что слово нечетное
-//                        Set<Character> currentWordSet = new HashSet<>();
-//                        for (char ch : words[i].toLowerCase().toCharArray()) {
-//                            if (deafConsonants.contains(ch)) {
-//                                currentWordSet.add(ch);
-//                            }
-//                        }
-//                        if (resultSet.isEmpty()) {
-//                            resultSet.addAll(currentWordSet);
-//                        } else {
-//                            resultSet.retainAll(currentWordSet); // Пересечение с предыдущими словами
-//                        }
-//                    }
-//                }
+        //5.4
+        System.out.println("Задание 5.4");
+        List<Character> list = Arrays.asList('к', 'п', 'с', 'т', 'ф', 'х', 'ц', 'ч', 'ш', 'щ');
+        Set<Character> letters = new HashSet<>(list);
+        String file2 = "src/file2.txt";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file2))) {
+            String line;
+            Set<Character> rez = null; // Множество для глухих согласных
+
+            while ((line = reader.readLine()) != null) {
+                String[] words = line.toLowerCase().split("\\s+");
+                for (int i = 0; i < words.length; i++) {
+                    if ((i + 1) % 2 != 0) {
+                        Set<Character> curcharacters = new HashSet<>();
+                        for (char j : words[i].toCharArray()) {
+                            if (letters.contains(j)) {
+                                curcharacters.add(j);
+                            }
+                        }
+                        if (rez == null) {
+                            rez = new HashSet<>(curcharacters);
+                        } else {
+                            Set<Character> chars = new HashSet<>();
+                            for (char j : rez) {
+                                if (curcharacters.contains(j)) {
+                                    chars.add(j);
+                                }
+                            }
+                            rez = chars;
+                        }
+                    }
+                }
+            }
+
+            if (rez == null || rez.isEmpty()) {
+                System.out.println("Нет глухих согласных");
+            } else {
+                List<Character> sortrez = new ArrayList<>(rez);
+                Collections.sort(sortrez);
+                System.out.println("Глухие согласные, которые входят в каждое нечетное слово:");
+                for (char i : sortrez) {
+                    System.out.println(i);
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден: " + file2);
+        } catch (IOException e) {
+            System.out.println("Ошибка чтения файла: " + e.getMessage());
+        }
+
+
+//        //6.4
+//        Queue<Object> queue = new LinkedList<>();
+//        // Ввод элементов очереди
+//        while (queue.isEmpty()) {
+//            System.out.println("Введите данные через пробел:");
+//            String input = in.nextLine();
+//            if (!input.trim().isEmpty()) {
+//                String[] elements = input.split(" ");
+//                queue.addAll(Arrays.asList(elements));
 //            }
-//
-//            // Вывод результата
-//            if (resultSet.isEmpty()) {
-//                System.out.println("Нет общих глухих согласных в нечетных словах.");
-//            } else {
-//                System.out.println("Глухие согласные, входящие в каждое нечетное слово (в алфавитном порядке):");
-//                for (char ch : resultSet) {
-//                    System.out.print(ch + " ");
-//                }
-//                System.out.println();
-//            }
-//
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Файл не найден: " + filePath);
-//        } catch (IOException e) {
-//            System.out.println("Ошибка при чтении файла: " + e.getMessage());
 //        }
-
-
-        //6.4
-        Queue<Object> queue = new LinkedList<>();
-        // Ввод элементов очереди
-        while (queue.isEmpty()) {
-            System.out.println("Введите данные через пробел:");
-            String input = in.nextLine();
-            if (!input.trim().isEmpty()) {
-                String[] elements = input.split(" ");
-                queue.addAll(Arrays.asList(elements));
-            }
-        }
-
-        int i;
-        while (true) {
-            System.out.println("Введите индекс i (начало диапазона):");
-            if (in.hasNextInt()) {
-                i = in.nextInt();
-                if (i < 0 || i >= queue.size()) {
-                    System.out.println("Индекс должен быть в диапазоне от 0 до " + (queue.size() - 1));
-                } else {
-                    break;
-                }
-            } else {
-                System.out.println("Введите корректное целое число");
-                in.next();
-            }
-        }
-
-        int j;
-        while (true) {
-            System.out.println("Введите индекс j (конец диапазона):");
-            if (in.hasNextInt()) {
-                j = in.nextInt();
-                if (j <= i || j >= queue.size()) {
-                    System.out.println("Индекс должен быть больше i и меньше " + queue.size());
-                } else {
-                    break;
-                }
-            } else {
-                System.out.println("Введите корректное целое число");
-                in.next();
-            }
-        }
-
-        // Проверка равенства элементов в диапазоне [i, j]
-        LinkedList<Object> list = new LinkedList<>(queue);
-        boolean flag = true;
-        for (int k = i; k < j; k++) {
-            if (!list.get(k).equals(list.get(k + 1))) {
-                flag = false;
-                break;
-            }
-        }
-        if (flag) {
-            System.out.println("Элементы диапазона равны");
-        } else {
-            System.out.println("Элементы диапазона не равны");
-        }
+//
+//        int i;
+//        while (true) {
+//            System.out.println("Введите индекс i (начало диапазона):");
+//            if (in.hasNextInt()) {
+//                i = in.nextInt();
+//                if (i < 0 || i >= queue.size()) {
+//                    System.out.println("Индекс должен быть в диапазоне от 0 до " + (queue.size() - 1));
+//                } else {
+//                    break;
+//                }
+//            } else {
+//                System.out.println("Введите корректное целое число");
+//                in.next();
+//            }
+//        }
+//
+//        int j;
+//        while (true) {
+//            System.out.println("Введите индекс j (конец диапазона):");
+//            if (in.hasNextInt()) {
+//                j = in.nextInt();
+//                if (j <= i || j >= queue.size()) {
+//                    System.out.println("Индекс должен быть больше i и меньше " + queue.size());
+//                } else {
+//                    break;
+//                }
+//            } else {
+//                System.out.println("Введите корректное целое число");
+//                in.next();
+//            }
+//        }
+//
+//        // Проверка равенства элементов в диапазоне [i, j]
+//        LinkedList<Object> list = new LinkedList<>(queue);
+//        boolean flag = true;
+//        for (int k = i; k < j; k++) {
+//            if (!list.get(k).equals(list.get(k + 1))) {
+//                flag = false;
+//                break;
+//            }
+//        }
+//        if (flag) {
+//            System.out.println("Элементы диапазона равны");
+//        } else {
+//            System.out.println("Элементы диапазона не равны");
+//        }
     }
 }
