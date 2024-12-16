@@ -165,82 +165,82 @@ public class Main {
 //            System.out.println("Ошибка: " + e.getMessage());
 //        }
 //
-        //4.2
-        System.out.println("Задание 4.2");
-        String file = "src/file.txt";
-        Map<String, List<Integer>> people = new HashMap<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String n1 = reader.readLine();
-            if (n1 == null || n1.isEmpty()) {
-                System.out.println("Файл пустой");
-                return;
-            }
-            int n;
-            try {
-                n = Integer.parseInt(n1);
-                if (n <= 0 || n > 250) {
-                    System.out.println("Количество участников не может быть отрицательным или больше 250");
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Неверный формат количества участников");
-                return;
-            }
-
-            for (int i = 0; i < n; i++) {
-                String line = reader.readLine();
-                if (line == null || line.isEmpty()) {
-                    System.out.println("В файле нет " + n + " участников");
-                    return;
-                }
-                String[] mas = line.split(" ");
-                if (mas.length != 5) {
-                    System.out.println("Неверный формат строки: " + line);
-                    return;
-                }
-
-                String name = mas[0] + " " + mas[1];
-                List<Integer> marks = Arrays.asList(Integer.parseInt(mas[2]), Integer.parseInt(mas[3]), Integer.parseInt(mas[4]));
-                people.put(name, marks);
-            }
-            int maximum = 0;
-            System.out.println("Участники, набравшие максимальное количество баллов:");
-            Map<String, Integer> rezpeople = new HashMap<>();
-            for (Map.Entry<String, List<Integer>> i : people.entrySet()) {
-                // Извлекаем имя участника и его баллы
-                String name = i.getKey();
-                List<Integer> marks = i.getValue();
-
-                // Проверка диапазона баллов для каждого задания
-                int mark1 = marks.get(0);
-                int mark2 = marks.get(1);
-                int mark3 = marks.get(2);
-
-                if (mark1 < 0 || mark1 > 25 || mark2 < 0 || mark2 > 25 || mark3 < 0 || mark3 > 25) {
-                    System.out.println("Баллы должны быть в диапазоне от 0 до 25. Ошибка у участника: " + name);
-                    continue;
-                }
-                int sum = mark1 + mark2 + mark3;
-                if (sum >= maximum) {
-                    maximum = sum;
-                }
-                rezpeople.put(name, sum);
-            }
-            for (Map.Entry<String, Integer> i : rezpeople.entrySet()) {
-                if (i.getValue() == maximum) {
-                    System.out.println(i.getKey());
-                }
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл не найден: " + file);
-        } catch (IOException e) {
-            System.out.println("Ошибка при чтении файла: " + e.getMessage());
-        }
+//        //4.2
+//        System.out.println("Задание 4.2");
+//        String file = "src/file.txt";
+//        Map<String, List<Integer>> people = new HashMap<>();
+//
+//        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+//            String n1 = reader.readLine();
+//            if (n1 == null || n1.isEmpty()) {
+//                System.out.println("Файл пустой");
+//                return;
+//            }
+//            int n;
+//            try {
+//                n = Integer.parseInt(n1);
+//                if (n <= 0 || n > 250) {
+//                    System.out.println("Количество участников не может быть отрицательным или больше 250");
+//                    return;
+//                }
+//            } catch (NumberFormatException e) {
+//                System.out.println("Неверный формат количества участников");
+//                return;
+//            }
+//
+//            for (int i = 0; i < n; i++) {
+//                String line = reader.readLine();
+//                if (line == null || line.isEmpty()) {
+//                    System.out.println("В файле нет " + n + " участников");
+//                    return;
+//                }
+//                String[] mas = line.split(" ");
+//                if (mas.length != 5) {
+//                    System.out.println("Неверный формат строки: " + line);
+//                    return;
+//                }
+//
+//                String name = mas[0] + " " + mas[1];
+//                List<Integer> marks = Arrays.asList(Integer.parseInt(mas[2]), Integer.parseInt(mas[3]), Integer.parseInt(mas[4]));
+//                people.put(name, marks);
+//            }
+//            int maximum = 0;
+//            System.out.println("Участники, набравшие максимальное количество баллов:");
+//            Map<String, Integer> rezpeople = new HashMap<>();
+//            for (Map.Entry<String, List<Integer>> i : people.entrySet()) {
+//                // Извлекаем имя участника и его баллы
+//                String name = i.getKey();
+//                List<Integer> marks = i.getValue();
+//
+//                // Проверка диапазона баллов для каждого задания
+//                int mark1 = marks.get(0);
+//                int mark2 = marks.get(1);
+//                int mark3 = marks.get(2);
+//
+//                if (mark1 < 0 || mark1 > 25 || mark2 < 0 || mark2 > 25 || mark3 < 0 || mark3 > 25) {
+//                    System.out.println("Баллы должны быть в диапазоне от 0 до 25. Ошибка у участника: " + name);
+//                    continue;
+//                }
+//                int sum = mark1 + mark2 + mark3;
+//                if (sum > maximum) {
+//                    maximum = sum;
+//                }
+//                rezpeople.put(name, sum);
+//            }
+//            for (Map.Entry<String, Integer> i : rezpeople.entrySet()) {
+//                if (i.getValue() == maximum) {
+//                    System.out.println(i.getKey());
+//                }
+//            }
+//
+//        } catch (FileNotFoundException e) {
+//            System.out.println("Файл не найден: " + file);
+//        } catch (IOException e) {
+//            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+//        }
 //
 //
-//        //5.4
+//        //5.2
 //        System.out.println("Задание 5.2");
 //        List<Character> list = Arrays.asList('к', 'п', 'с', 'т', 'ф', 'х', 'ц', 'ч', 'ш', 'щ');
 //        Set<Character> letters = new HashSet<>(list);
@@ -262,9 +262,9 @@ public class Main {
 //            if (use.isEmpty()) {
 //                System.out.println("Нет глухих согласных");
 //            } else {
-//                List<Character> rez = new ArrayList<>(use);
+//                List<Character> rez = new ArrayList<>(letters);
 //                Collections.sort(rez);
-//                System.out.println("Глухие согласные, которые входят в каждое нечетное слово:");
+//                System.out.println("Глухие согласные, которые не входят ни в одно слово:");
 //                for (char i : rez) {
 //                    System.out.println(i);
 //                }
@@ -275,42 +275,41 @@ public class Main {
 //            System.out.println("Ошибка чтения файла: " + e.getMessage());
 //        }
 //
-//
-//        //6.4
-//        System.out.println("Задание 6.2");
-//        System.out.println("Введите элементы списка (целые числа), для завершения ввода введите 'stop':");
-//        List<Integer> L = new ArrayList<>();
-//        while (true) {
-//            if (in.hasNextInt()) {
-//                int num = in.nextInt();
-//                L.add(num);
-//            } else {
-//                String input = in.next();
-//                if (input.equals("stop")) {
-//                    break;
-//                } else {
-//                    System.out.println("Введите либо целое число, либо 'stop' для завершения ввода");
-//                }
-//            }
-//        }
-//        in.nextLine();
-//
-//        if (L.isEmpty()) {
-//            System.out.println("Очередь пуста. Завершение программы.");
-//            return;
-//        }
-//        Queue<Integer> queue = new LinkedList<>();
-//        for (Integer i : L) {
-//            queue.add(i);
-//        }
-//        for (int i = L.size() - 1; i >= 0; i--) {
-//            queue.add(L.get(i));
-//        }
-//        System.out.println("Полученная очередь:");
-//        for (Integer i : queue) {
-//            System.out.print(i + " ");
-//        }
-//        System.out.println();
+        //6.2
+        System.out.println("Задание 6.2");
+        System.out.println("Введите элементы списка (целые числа), для завершения ввода введите 'stop':");
+        List<Integer> L = new ArrayList<>();
+        while (true) {
+            if (in.hasNextInt()) {
+                int num = in.nextInt();
+                L.add(num);
+            } else {
+                String input = in.next();
+                if (input.equals("stop")) {
+                    break;
+                } else {
+                    System.out.println("Введите либо целое число, либо 'stop' для завершения ввода");
+                }
+            }
+        }
+        in.nextLine();
+
+        if (L.isEmpty()) {
+            System.out.println("Очередь пуста. Завершение программы.");
+            return;
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for (Integer i : L) {
+            queue.add(i);
+        }
+        for (int i = L.size() - 1; i >= 0; i--) {
+            queue.add(L.get(i));
+        }
+        System.out.println("Полученная очередь:");
+        for (Integer i : queue) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
         in.close();
     }
 }
