@@ -1,5 +1,5 @@
 public interface Frac {
     double doublevalue();
-    void setChisl(int chisl);
-    void setZnam(int znam);
+    int setChisl(int chisl);
+    int setZnam(int znam);
 }

@@ -1,34 +1,24 @@
-public class Cachfraction {
-    private final Fraction fraction;
-    private Double cachedValue = null;
+public class Cachfraction extends Fraction {
+    private Double doubval;
 
-    public Cachfraction(Fraction fraction) {
-        this.fraction = fraction;
+    public Cachfraction(int chis, int znam) {
+        super(chis, znam);
     }
 
     public double doublevalue() {
-        if (this.cachedValue == null) {
-            this.cachedValue = fraction.doublevalue();
+        if (doubval == null) {
+            doubval = (double) getChisl() / getZnam();
         }
-        return this.cachedValue;
+        return doubval;
     }
 
-    public void updateNumerator(int a) {
-        fraction.seta(a);
-        this.cachedValue = null;
+    public int setChisl(int chisl) {
+        doubval = null;
+        return super.setChisl(chisl);
     }
 
-    public void updateDenominator(int b) {
-        fraction.setb(b);
-        this.cachedValue = null;
-    }
-
-    public Fraction getFraction() {
-        return this.fraction;
-    }
-
-    @Override
-    public String toString() {
-        return fraction.toString();
+    public int setZnam(int znam) {
+        doubval = null;
+        return super.setZnam(znam);
     }
 }

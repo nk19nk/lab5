@@ -2,11 +2,20 @@ public class Fraction implements Frac{
     private int chisl;
     private int znam;
 
-    public void setChisl(int chisl) {
-        this.chisl = chisl;
+    public int getChisl(){
+        return this.chisl;
     }
 
-    public void setZnam(int znam) {
+    public int getZnam(){
+        return this.znam;
+    }
+
+    public int setChisl(int chisl) {
+        this.chisl = chisl;
+        return chisl;
+    }
+
+    public int setZnam(int znam) {
         if (znam == 0) {
             throw new IllegalArgumentException("Знаменатель не может быть равен нулю");
         }
@@ -16,6 +25,7 @@ public class Fraction implements Frac{
         } else {
             this.znam = znam;
         }
+        return znam;
     }
 
     public Fraction(int chisl, int znam) {

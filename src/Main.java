@@ -30,7 +30,7 @@ public class Main {
             }
         }
         System.out.println("Введенная дробь:");
-        Fraction f = new Fraction(ch, zn);
+        Cachfraction f = new Cachfraction(ch, zn);
         System.out.println(f);
 
         while (true) {
@@ -40,7 +40,7 @@ public class Main {
             System.out.println("2) Изменить знаменатель");
             System.out.println("3) Привести дробь к вещественному числу");
             System.out.print("Введите номер операции: ");
-            int oper = 0;
+            int oper = -1;
             while (true) {
                 if (in.hasNextInt()) {
                     oper = in.nextInt();
