@@ -4,6 +4,19 @@ import java.util.stream.Collectors;
 
 
 public class Main {
+
+    public static List<String> replace(List<String> L, List<String> L1, List<String> L2) {
+        int index = Collections.indexOfSubList(L, L1);
+        if (index != -1) {
+            List<String> newL = new ArrayList<>(L.subList(0, index));
+            newL.addAll(L2);
+            newL.addAll(L.subList(index + L1.size(), L.size()));
+            return newL;
+        } else {
+            throw new IllegalArgumentException("Список L1 не найден в L");
+        }
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 //        //1.1
@@ -131,147 +144,140 @@ public class Main {
 //        System.out.println(cat + " мяукал " + cat.getCount() + " раз(а)");
 //
 //
-//        //3.2
-//        System.out.println("Задание 3.2");
-//        try {
-//            System.out.println("Введите элементы списка L через пробел:");
-//            String inputL = in.nextLine();
-//            String[] elemL = inputL.split(" ");
-//            List<String> L = new ArrayList<>(Arrays.asList(elemL));
-//
-//            System.out.println("Введите элементы списка L1 через пробел:");
-//            String inputL1 = in.nextLine();
-//            String[] elemL1 = inputL1.split(" ");
-//            List<String> L1 = new ArrayList<>(Arrays.asList(elemL1));
-//
-//            System.out.println("Введите элементы списка L2 через пробел:");
-//            String inputL2 = in.nextLine();
-//            String[] elemL2 = inputL2.split(" ");
-//            List<String> L2 = new ArrayList<>(Arrays.asList(elemL2));
-//
-//            int index = Collections.indexOfSubList(L, L1);
-//            if (index != -1) {
-//                List<String> newL = new ArrayList<>(L.subList(0, index));
-//                newL.addAll(L2);
-//                newL.addAll(L.subList(index + L1.size(), L.size()));
-//                System.out.println("Новый список:");
-//                System.out.println(newL);
-//            } else {
-//                System.out.println("Списка L1 нет в L");
-//            }
-//        } catch (IllegalArgumentException e) {
-//            System.out.println("Ошибка: " + e.getMessage());
-//        }
-//
-//        //4.2
-//        System.out.println("Задание 4.2");
-//        String file = "src/file.txt";
-//        Map<String, List<Integer>> people = new HashMap<>();
-//
-//        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-//            String n1 = reader.readLine();
-//            if (n1 == null || n1.isEmpty()) {
-//                System.out.println("Файл пустой");
-//                return;
-//            }
-//            int n;
-//            try {
-//                n = Integer.parseInt(n1);
-//                if (n <= 0 || n > 250) {
-//                    System.out.println("Количество участников не может быть отрицательным или больше 250");
-//                    return;
-//                }
-//            } catch (NumberFormatException e) {
-//                System.out.println("Неверный формат количества участников");
-//                return;
-//            }
-//
-//            for (int i = 0; i < n; i++) {
-//                String line = reader.readLine();
-//                if (line == null || line.isEmpty()) {
-//                    System.out.println("В файле нет " + n + " участников");
-//                    return;
-//                }
-//                String[] mas = line.split(" ");
-//                if (mas.length != 5) {
-//                    System.out.println("Неверный формат строки: " + line);
-//                    return;
-//                }
-//
-//                String name1 = mas[0] + " " + mas[1];
-//                List<Integer> marks = Arrays.asList(Integer.parseInt(mas[2]), Integer.parseInt(mas[3]), Integer.parseInt(mas[4]));
-//                people.put(name1, marks);
-//            }
-//            int maximum = 0;
-//            System.out.println("Участники, набравшие максимальное количество баллов:");
-//            Map<String, Integer> rezpeople = new HashMap<>();
-//            for (Map.Entry<String, List<Integer>> i : people.entrySet()) {
-//                // Извлекаем имя участника и его баллы
-//                String name1 = i.getKey();
-//                List<Integer> marks = i.getValue();
-//
-//                // Проверка диапазона баллов для каждого задания
-//                int mark1 = marks.get(0);
-//                int mark2 = marks.get(1);
-//                int mark3 = marks.get(2);
-//
-//                if (mark1 < 0 || mark1 > 25 || mark2 < 0 || mark2 > 25 || mark3 < 0 || mark3 > 25) {
-//                    System.out.println("Баллы должны быть в диапазоне от 0 до 25, ошибка у участника: " + name1);
-//                    continue;
-//                }
-//                int sum = mark1 + mark2 + mark3;
-//                if (sum > maximum) {
-//                    maximum = sum;
-//                }
-//                rezpeople.put(name1, sum);
-//            }
-//            for (Map.Entry<String, Integer> i : rezpeople.entrySet()) {
-//                if (i.getValue() == maximum) {
-//                    System.out.println(i.getKey());
-//                }
-//            }
-//
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Файл не найден: " + file);
-//        } catch (IOException e) {
-//            System.out.println("Ошибка при чтении файла: " + e.getMessage());
-//        }
-//
-//
-//        //5.2
-//        System.out.println("Задание 5.2");
-//        List<Character> list = Arrays.asList('к', 'п', 'с', 'т', 'ф', 'х', 'ц', 'ч', 'ш', 'щ');
-//        Set<Character> letters = new HashSet<>(list);
-//        String file2 = "src/file2.txt";
-//        try (BufferedReader reader = new BufferedReader(new FileReader(file2))) {
-//            String line;
-//            Set<Character> use = new HashSet<>();
-//            while ((line = reader.readLine()) != null) {
-//                String[] words = line.toLowerCase().split("\\s+");
-//                for (String word : words) {
-//                    for (char i : word.toCharArray()) {
-//                        if (letters.contains(i)) {
-//                            use.add(i);
-//                        }
-//                    }
-//                }
-//            }
-//            letters.removeAll(use);
-//            if (use.isEmpty()) {
-//                System.out.println("Нет глухих согласных");
-//            } else {
-//                List<Character> rez = new ArrayList<>(letters);
-//                Collections.sort(rez);
-//                System.out.println("Глухие согласные, которые не входят ни в одно слово:");
-//                for (char i : rez) {
-//                    System.out.println(i);
-//                }
-//            }
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Файл не найден: " + file2);
-//        } catch (IOException e) {
-//            System.out.println("Ошибка чтения файла: " + e.getMessage());
-//        }
+        //3.2
+        System.out.println("Задание 3.2");
+        try {
+            System.out.println("Введите элементы списка L через пробел:");
+            String inputL = in.nextLine();
+            String[] elemL = inputL.split(" ");
+            List<String> L = new ArrayList<>(Arrays.asList(elemL));
+
+            System.out.println("Введите элементы списка L1 через пробел:");
+            String inputL1 = in.nextLine();
+            String[] elemL1 = inputL1.split(" ");
+            List<String> L1 = new ArrayList<>(Arrays.asList(elemL1));
+
+            System.out.println("Введите элементы списка L2 через пробел:");
+            String inputL2 = in.nextLine();
+            String[] elemL2 = inputL2.split(" ");
+            List<String> L2 = new ArrayList<>(Arrays.asList(elemL2));
+
+            List<String> newL = replace(L, L1, L2);
+            System.out.println("Новый список:");
+            System.out.println(newL);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        //4.2
+        System.out.println("Задание 4.2");
+        String file = "src/file.txt";
+        Map<String, List<Integer>> people = new HashMap<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String n1 = reader.readLine();
+            if (n1 == null || n1.isEmpty()) {
+                System.out.println("Файл пустой");
+                return;
+            }
+            int n;
+            try {
+                n = Integer.parseInt(n1);
+                if (n <= 0 || n > 250) {
+                    System.out.println("Количество участников не может быть отрицательным или больше 250");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Неверный формат количества участников");
+                return;
+            }
+
+            for (int i = 0; i < n; i++) {
+                String line = reader.readLine();
+                if (line == null || line.isEmpty()) {
+                    System.out.println("В файле нет " + n + " участников");
+                    return;
+                }
+                String[] mas = line.split(" ");
+                if (mas.length != 5) {
+                    System.out.println("Неверный формат строки: " + line);
+                    return;
+                }
+
+                String name1 = mas[0] + " " + mas[1];
+                List<Integer> marks = Arrays.asList(Integer.parseInt(mas[2]), Integer.parseInt(mas[3]), Integer.parseInt(mas[4]));
+                people.put(name1, marks);
+            }
+            int maximum = 0;
+            System.out.println("Участники, набравшие максимальное количество баллов:");
+            Map<String, Integer> rezpeople = new HashMap<>();
+            for (Map.Entry<String, List<Integer>> i : people.entrySet()) {
+                // Извлекаем имя участника и его баллы
+                String name1 = i.getKey();
+                List<Integer> marks = i.getValue();
+
+                // Проверка диапазона баллов для каждого задания
+                int mark1 = marks.get(0);
+                int mark2 = marks.get(1);
+                int mark3 = marks.get(2);
+
+                if (mark1 < 0 || mark1 > 25 || mark2 < 0 || mark2 > 25 || mark3 < 0 || mark3 > 25) {
+                    System.out.println("Баллы должны быть в диапазоне от 0 до 25, ошибка у участника: " + name1);
+                    continue;
+                }
+                int sum = mark1 + mark2 + mark3;
+                if (sum > maximum) {
+                    maximum = sum;
+                }
+                rezpeople.put(name1, sum);
+            }
+            for (Map.Entry<String, Integer> i : rezpeople.entrySet()) {
+                if (i.getValue() == maximum) {
+                    System.out.println(i.getKey());
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден: " + file);
+        } catch (IOException e) {
+            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+        }
+
+
+        //5.2
+        System.out.println("Задание 5.2");
+        List<Character> list = Arrays.asList('к', 'п', 'с', 'т', 'ф', 'х', 'ц', 'ч', 'ш', 'щ');
+        Set<Character> letters = new HashSet<>(list);
+        String file2 = "src/file2.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(file2))) {
+            String line;
+            Set<Character> use = new HashSet<>();
+            while ((line = reader.readLine()) != null) {
+                String[] words = line.toLowerCase().split("\\s+");
+                for (String word : words) {
+                    for (char i : word.toCharArray()) {
+                        if (letters.contains(i)) {
+                            use.add(i);
+                        }
+                    }
+                }
+            }
+            letters.removeAll(use);
+            if (use.isEmpty()) {
+                System.out.println("Нет глухих согласных");
+            } else {
+                List<Character> rez = new ArrayList<>(letters);
+                Collections.sort(rez);
+                System.out.println("Глухие согласные, которые не входят ни в одно слово:");
+                for (char i : rez) {
+                    System.out.println(i);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден: " + file2);
+        } catch (IOException e) {
+            System.out.println("Ошибка чтения файла: " + e.getMessage());
+        }
 //
 //        //6.2
 //        System.out.println("Задание 6.2");
